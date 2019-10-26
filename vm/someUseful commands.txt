@@ -1,0 +1,25 @@
+#some useful git commands:
+git status #to see recent changes
+git pull #to update local repository
+git reset --hard shaSummOfCommit #to reset all changes and go to changes of mentioned commit
+git reset --hard HEAD #to reset all changes and go to changes of last commit
+git log #to see information about all commit (SHA-summs, descriptions etc) (to quit press q)
+
+#change the branch
+git checkout nameOfBranch
+
+#to test git clone + internet
+git clone https://github.com/GoAlexander/harbour-editor.git
+
+#to access shared folder start nautilus with sudo
+sudo nautilus
+
+#change permissions of files after getting it from shared folder
+sudo chown -R user:user *
+
+#change permissions of web server folder (maybe by now is not so security decision but it works...)
+sudo chmod 777 /opt/lampp/htdocs
+
+#change permissions of ontology-files
+chmod 777 nameOfOnt
+

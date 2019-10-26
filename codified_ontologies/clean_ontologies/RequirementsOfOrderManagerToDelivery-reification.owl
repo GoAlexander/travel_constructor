@@ -1,0 +1,662 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY RequirementsOfOrderManagerToDelivery-reification "http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#"
+     xml:base="http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:RequirementsOfOrderManagerToDelivery-reification="http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about=""/>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#existentiallyDependentOf -->
+
+	<owl:ObjectProperty rdf:about="#existentiallyDependentOf">
+		<rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+		<rdfs:domain rdf:resource="#Individual"/>
+		<rdfs:range rdf:resource="#Individual"/>
+		<owl:inverseOf rdf:resource="#invExistentiallyDependentOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#invExistentiallyDependentOf -->
+
+	<owl:ObjectProperty rdf:about="#invExistentiallyDependentOf">
+		<rdfs:domain rdf:resource="#Individual"/>
+		<rdfs:range rdf:resource="#Individual"/>
+		<owl:inverseOf rdf:resource="#existentiallyDependentOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#partOf -->
+
+	<owl:ObjectProperty rdf:about="#partOf">
+		<rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+		<rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+		<rdfs:domain rdf:resource="#Individual"/>
+		<rdfs:range rdf:resource="#Individual"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#hasTemporalExtent -->
+
+	<owl:ObjectProperty rdf:about="#hasTemporalExtent">
+		<rdf:type rdf:resource="&owl;FunctionalProperty"/>
+		<rdfs:domain rdf:resource="#Individual"/>
+		<rdfs:range rdf:resource="#TemporalExtent"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#inheresIn -->
+
+	<owl:ObjectProperty rdf:about="#inheresIn">
+		<rdf:type rdf:resource="&owl;FunctionalProperty"/>
+		<rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+		<rdfs:domain rdf:resource="#IntrinsicMoment"/>
+		<rdfs:range rdf:resource="#Individual"/>
+		<rdfs:subPropertyOf rdf:resource="#existentiallyDependentOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#mediates -->
+
+	<owl:ObjectProperty rdf:about="#mediates">
+		<rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+		<rdfs:domain rdf:resource="#Relator"/>
+		<rdfs:range rdf:resource="#Individual"/>
+		<rdfs:subPropertyOf rdf:resource="#existentiallyDependentOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#existentiallyDependentOfQua -->
+
+	<owl:ObjectProperty rdf:about="#existentiallyDependentOfQua">
+		<rdf:type rdf:resource="&owl;SymmetricProperty"/>
+		<rdfs:domain rdf:resource="#RelationalQuaIndividual"/>
+		<rdfs:range rdf:resource="#RelationalQuaIndividual"/>
+		<rdfs:subPropertyOf rdf:resource="#existentiallyDependentOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#inseparablePartOf -->
+
+	<owl:ObjectProperty rdf:about="#inseparablePartOf">
+		<rdfs:subPropertyOf rdf:resource="#partOf"/>
+		<rdfs:subPropertyOf rdf:resource="#existentiallyDependentOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#essentialPartOf -->
+
+	<owl:ObjectProperty rdf:about="#essentialPartOf">
+		<rdfs:subPropertyOf rdf:resource="#partOf"/>
+		<rdfs:subPropertyOf rdf:resource="#invExistentiallyDependentOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#componentOf -->
+
+	<owl:ObjectProperty rdf:about="#componentOf">
+		<rdfs:domain rdf:resource="#FunctionalComplex"/>
+		<rdfs:range rdf:resource="#FunctionalComplex"/>
+		<rdfs:subPropertyOf rdf:resource="#partOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#memberOf -->
+
+	<owl:ObjectProperty rdf:about="#memberOf">
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#FunctionalComplex"/>
+					<rdf:Description rdf:about="#Collective"/>
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="#Collective"/>
+		<rdfs:subPropertyOf rdf:resource="#partOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#subCollectionOf -->
+
+	<owl:ObjectProperty rdf:about="#subCollectionOf">
+		<rdfs:domain rdf:resource="#Collective"/>
+		<rdfs:range rdf:resource="#Collective"/>
+		<rdfs:subPropertyOf rdf:resource="#partOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#subQuantityOf -->
+
+	<owl:ObjectProperty rdf:about="#subQuantityOf">
+		<rdfs:domain rdf:resource="#Quantity"/>
+		<rdfs:range rdf:resource="#Quantity"/>
+		<rdfs:subPropertyOf rdf:resource="#essentialPartOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#partOfRelator -->
+
+	<owl:ObjectProperty rdf:about="#partOfRelator">
+		<rdf:type rdf:resource="&owl;FunctionalProperty"/>
+		<rdfs:domain rdf:resource="#RelationalQuaIndividual"/>
+		<rdfs:range rdf:resource="#Relator"/>
+		<rdfs:subPropertyOf rdf:resource="#inseparablePartOf"/>
+		<rdfs:subPropertyOf rdf:resource="#essentialPartOf"/>
+	</owl:ObjectProperty>
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#hasValue -->
+
+	<owl:DatatypeProperty rdf:about="#hasValue">
+		<rdf:type rdf:resource="&owl;FunctionalProperty"/>
+		<rdfs:domain rdf:resource="#Quality"/>
+	</owl:DatatypeProperty>
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Individual -->
+
+	<owl:Class rdf:about="#Individual">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#Object"/>
+					<rdf:Description rdf:about="#Moment"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#hasTemporalExtent"/>
+				<owl:someValuesFrom rdf:resource="#TemporalExtent"/>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#TemporalExtent -->
+
+	<owl:Class rdf:about="#TemporalExtent">
+		<owl:disjointWith rdf:resource="#Individual"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Object -->
+
+	<owl:Class rdf:about="#Object">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#FunctionalComplex"/>
+					<rdf:Description rdf:about="#Collective"/>
+					<rdf:Description rdf:about="#Quantity"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf rdf:resource="#Individual"/>
+		<owl:disjointWith rdf:resource="#Moment"/>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty>
+					<owl:ObjectProperty>
+						<owl:inverseOf rdf:resource="#inheresIn"/>
+					</owl:ObjectProperty>
+				</owl:onProperty>
+				<owl:someValuesFrom rdf:resource="#Moment"/>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Moment -->
+
+	<owl:Class rdf:about="#Moment">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#IntrinsicMoment"/>
+					<rdf:Description rdf:about="#Relator"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf rdf:resource="#Individual"/>
+		<owl:disjointWith rdf:resource="#Object"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#FunctionalComplex -->
+
+	<owl:Class rdf:about="#FunctionalComplex">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#Person"/>
+					<rdf:Description rdf:about="#Person"/>
+					<rdf:Description rdf:about="#Standard"/>
+					<rdf:Description rdf:about="#Termobox"/>
+					<rdf:Description rdf:about="#Termobox"/>
+					<rdf:Description rdf:about="#Person"/>
+					<rdf:Description rdf:about="#Standard"/>
+					<rdf:Description rdf:about="#Person"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf rdf:resource="#Object"/>
+		<owl:disjointWith rdf:resource="#FunctionalComplex"/>
+		<owl:disjointWith rdf:resource="#Collective"/>
+		<owl:disjointWith rdf:resource="#Quantity"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Collective -->
+
+	<owl:Class rdf:about="#Collective">
+		<rdfs:subClassOf rdf:resource="#Object"/>
+		<owl:disjointWith rdf:resource="#FunctionalComplex"/>
+		<owl:disjointWith rdf:resource="#Collective"/>
+		<owl:disjointWith rdf:resource="#Quantity"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Quantity -->
+
+	<owl:Class rdf:about="#Quantity">
+		<rdfs:subClassOf rdf:resource="#Object"/>
+		<owl:disjointWith rdf:resource="#FunctionalComplex"/>
+		<owl:disjointWith rdf:resource="#Collective"/>
+		<owl:disjointWith rdf:resource="#Quantity"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#IntrinsicMoment -->
+
+	<owl:Class rdf:about="#IntrinsicMoment">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#Quality"/>
+					<rdf:Description rdf:about="#Mode"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf rdf:resource="#Moment"/>
+		<owl:disjointWith rdf:resource="#Relator"/>
+		<owl:equivalentClass>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#inheresIn"/>
+				<owl:someValuesFrom rdf:resource="#Individual"/>
+			</owl:Restriction>
+		</owl:equivalentClass>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Relator -->
+
+	<owl:Class rdf:about="#Relator">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#Delivery"/>
+					<rdf:Description rdf:about="#Delivery"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf rdf:resource="#Moment"/>
+		<owl:disjointWith rdf:resource="#IntrinsicMoment"/>
+		<owl:equivalentClass>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#mediates"/>
+				<owl:someValuesFrom rdf:resource="#Individual"/>
+			</owl:Restriction>
+		</owl:equivalentClass>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#mediates"/>
+				<owl:onClass rdf:resource="#Individual"/>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">2</owl:minQualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty>
+					<owl:ObjectProperty>
+						<owl:inverseOf rdf:resource="#partOfRelator"/>
+					</owl:ObjectProperty>
+				</owl:onProperty>
+				<owl:onClass rdf:resource="#RelationalQuaIndividual"/>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">2</owl:minQualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Mode -->
+
+	<owl:Class rdf:about="#Mode">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#QuaIndividual"/>
+					<rdf:Description rdf:about="#QuaIndividual"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf rdf:resource="#IntrinsicMoment"/>
+		<owl:disjointWith rdf:resource="#Quality"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Quality -->
+
+	<owl:Class rdf:about="#Quality">
+		<rdfs:subClassOf rdf:resource="#IntrinsicMoment"/>
+		<owl:disjointWith rdf:resource="#Mode"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#QuaIndividual -->
+
+	<owl:Class rdf:about="#QuaIndividual">
+		<owl:equivalentClass>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<rdf:Description rdf:about="#PhasedQuaIndividual"/>
+					<rdf:Description rdf:about="#RelationalQuaIndividual"/>
+				</owl:unionOf>
+			</owl:Class>
+		</owl:equivalentClass>
+		<rdfs:subClassOf rdf:resource="#Mode"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#RelationalQuaIndividual -->
+
+	<owl:Class rdf:about="#RelationalQuaIndividual">
+		<rdfs:subClassOf rdf:resource="#QuaIndividual"/>
+		<owl:disjointWith rdf:resource="#PhasedQuaIndividual"/>
+		<owl:equivalentClass>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#partOfRelator"/>
+				<owl:someValuesFrom rdf:resource="#Relator"/>
+			</owl:Restriction>
+		</owl:equivalentClass>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#PhasedQuaIndividual -->
+
+	<owl:Class rdf:about="#PhasedQuaIndividual">
+		<rdfs:subClassOf rdf:resource="#QuaIndividual"/>
+		<owl:disjointWith rdf:resource="#RelationalQuaIndividual"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Delivery -->
+
+	<owl:Class rdf:about="#Delivery">
+		<rdfs:subClassOf rdf:resource="#Relator"/>
+		<rdfs:subClassOf>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#mediates"/>
+				<owl:onClass rdf:resource="#Person"/>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty>
+					<owl:ObjectProperty>
+						<owl:inverseOf rdf:resource="#partOfRelator"/>
+					</owl:ObjectProperty>
+				</owl:onProperty>
+				<owl:onClass rdf:resource="#QuaOrderManager"/>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#mediates"/>
+				<owl:onClass rdf:resource="#Person"/>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty>
+					<owl:ObjectProperty>
+						<owl:inverseOf rdf:resource="#partOfRelator"/>
+					</owl:ObjectProperty>
+				</owl:onProperty>
+				<owl:onClass rdf:resource="#QuaDeliverer"/>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#QuaDeliverer -->
+
+	<owl:Class rdf:about="#QuaDeliverer">
+		<rdfs:subClassOf rdf:resource="#RelationalQuaIndividual"/>
+		<owl:disjointWith rdf:resource="#QuaOrderManager"/>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#inheresIn"/>
+				<owl:someValuesFrom rdf:resource="#Person"/>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#partOfRelator"/>
+				<owl:onClass rdf:resource="#Delivery"/>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#existentiallyDependentOfQua"/>
+				<owl:onClass rdf:resource="#QuaOrderManager"/>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Termobox -->
+
+	<owl:Class rdf:about="#Termobox">
+		<rdfs:subClassOf rdf:resource="#FunctionalComplex"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+		<owl:disjointWith rdf:resource="#Standard"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+		<owl:disjointWith rdf:resource="#Standard"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+		<rdfs:subClassOf>
+		</rdfs:subClassOf>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#MedicalTermobox -->
+
+	<owl:Class rdf:about="#MedicalTermobox">
+		<rdfs:subClassOf rdf:resource="#Termobox"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Person -->
+
+	<owl:Class rdf:about="#Person">
+		<rdfs:subClassOf rdf:resource="#FunctionalComplex"/>
+		<owl:disjointWith rdf:resource="#Standard"/>
+		<owl:disjointWith rdf:resource="#Termobox"/>
+		<owl:disjointWith rdf:resource="#Termobox"/>
+		<owl:disjointWith rdf:resource="#Standard"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Standard -->
+
+	<owl:Class rdf:about="#Standard">
+		<rdfs:subClassOf rdf:resource="#FunctionalComplex"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+		<owl:disjointWith rdf:resource="#Termobox"/>
+		<owl:disjointWith rdf:resource="#Termobox"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+		<owl:disjointWith rdf:resource="#Person"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#FoodTermobox -->
+
+	<owl:Class rdf:about="#FoodTermobox">
+		<rdfs:subClassOf rdf:resource="#Termobox"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#Person -->
+
+	<owl:Class rdf:about="#Person">
+		<rdfs:subClassOf rdf:resource="#FunctionalComplex"/>
+		<owl:disjointWith rdf:resource="#Standard"/>
+		<owl:disjointWith rdf:resource="#Termobox"/>
+		<owl:disjointWith rdf:resource="#Termobox"/>
+		<owl:disjointWith rdf:resource="#Standard"/>
+	</owl:Class>
+
+
+
+
+
+    <!-- http://localhost/RequirementsOfOrderManagerToDelivery-reification.owl#QuaOrderManager -->
+
+	<owl:Class rdf:about="#QuaOrderManager">
+		<rdfs:subClassOf rdf:resource="#RelationalQuaIndividual"/>
+		<owl:disjointWith rdf:resource="#QuaDeliverer"/>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#inheresIn"/>
+				<owl:someValuesFrom rdf:resource="#Person"/>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#partOfRelator"/>
+				<owl:onClass rdf:resource="#Delivery"/>
+				<owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="#existentiallyDependentOfQua"/>
+				<owl:onClass rdf:resource="#QuaDeliverer"/>
+				<owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+
+
+
+
+</rdf:RDF>
+
+<!-- Generated by OntoUML2OWL Eclipse Plugin by NEMO (http://nemo.inf.ufes.br/) -->
+

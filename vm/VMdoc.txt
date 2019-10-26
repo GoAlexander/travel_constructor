@@ -1,0 +1,49 @@
+Virtual Machine: Ubuntu-OntologyProject
+user: user
+password: user
+Use "Virtual Box"(TM) by Oracle(TM) to use this VM.
+
+VM is based on Ubuntu 14.04.1 with following preinstalled and configured software:
+-git
+-eclipse
+-lampp server
+-script to start lampp server (on Desktop)
+-OLED
+-Protege
+-Java JDK
+-some ontologies (for testing)
+-added neccessary permessions for htdocs folder, ontologies files (chmod 777)
+
+
+How to start project (short version):
+-start VM
+-update git project
+	-open terminal and execute:
+	-`cd /home/user/workspace/Ontology`
+	-git pull
+-start script to start the web server
+	-`cd /home/user`
+	-`./startServer.sh`
+-start eclipse (from the launcher)
+-start project in eclipse
+
+
+How to start project (extended):
+-start VM
+-(optional) update git project
+	-`cd /home/user/workspace/Ontology`
+	-git pull
+-start script to start the web server
+	-`cd /home/user`
+	-`./startServer.sh`
+-start eclipse (from the launcher)
+-make sure that your ontologies files have right permissions (they should be writable for ftp client of Agent)
+-change all URLs (varaibles <internalOnt> and <ftpURL> especially in class <MyCognitiveAgent>) to ontologies (in VM in should be like http://user-virtualbox/...)
+-start project in eclipse
+
+
+Note:
+-Stop Jade only by pressing: File - Shut down Agent Platform
+(else you have to stop java process in system monitor)
+-I recommend to have 2 GB of RAM and 2 cores for the VM
+

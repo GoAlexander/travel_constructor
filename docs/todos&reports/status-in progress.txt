@@ -1,0 +1,53 @@
+Features in progress.
+---------------------
+
+-Поделать запросы (см zim)
+
+-[ВАЖНОЕ!] Реализовывать алгоритм!
+-[Пока заморожено] Написать алгоритм inContradiction()
+
+-метод для merge онтологий, по подобию: https://github.com/phillord/owl-api/blob/master/contract/src/test/java/org/coode/owlapi/examples/Examples.java#L1310
+Тестировать на двух присланных онтологиях. (Интеграция во внутреннюю онтологию!)
+->(Через GUI в Jade (сделать кнопку), либо через сообщение (processMessage()))
+(приходит ссылка на онтологию, нужно сделать merge в новую)
+
+
+-Собрать и протестировать Pellet (т. е. начальная поддержка)
+	(см. письмо)
+	-см. и отчитаться может ли он обрабатываться "абстрактные аксиомы"
+
+
+-[deleteInstance(...)] - убрать заглушку if(true) (сейчас удаляет все)
+(выводить в массив, если он пустой, то значит можно удалять)
+
+-Переписать лог ДБ с логированием(!)!
+(спросить как лучше писать логи (просто через Writer или через логи))
+-Убрать в логах агента, лишнее:
+Nov 15, 2016 4:34:57 PM agent.KbRequest processMessage
+INFO: 
+(в общем "причесать" логи)
+
+-Переделать return 0 -> все хорошо, return 1 -> ошибка
+-Провести "аудит" в KbRequest + чистку кода!
+
+-"обозначение успеха обработки сообщения (true/false)" -> сделать nor_error / error
+
+-Подводить тесты по бизнес-кейсы
+
+
+
+
+Дополнительно:
+=============
+-дополнительные тесты над 2-ой онтологией!
+-После удаления остается:
+    <!-- http://x556uq/DO-pizza-ootos.owl#EatableProduct -->
+    <owl:Class rdf:about="http://x556uq/DO-pizza-ootos.owl#EatableProduct"/>
+    
+    <!-- http://x556uq/DO-pizza-ootos.owl#Pizza -->
+    <owl:Class rdf:about="http://x556uq/DO-pizza-ootos.owl#Pizza"/>
+
+    <!-- http://x556uq/DO-pizza-ootos.owl#PizzaRecipe -->
+    <owl:Class rdf:about="http://x556uq/DO-pizza-ootos.owl#PizzaRecipe"/>
+
+

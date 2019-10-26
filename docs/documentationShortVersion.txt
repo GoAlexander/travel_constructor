@@ -1,0 +1,41 @@
+"Ontology" project short documentation.
+---------------------------------------
+
+Проект разрабатывался и тестировался на:
+	-OS: Ubuntu 16.04
+	-web-server: lampp (version: xampp 5.6.14-0)
+
+Зависимости:
+	-commons-net-3.4 (ftp library)
+	-jade-4.3.3
+	-OWL API 4.2.3.20160319-0906 (рекомендуется добавлять OWL API в свой проект с помощью Maven (у OWL API большое количество зависимостей))
+
+Из библиотеки Jena (не обязательно, но рекомендуется):
+	-log4j-1.2.17.jar
+	-slf4j-api-1.7.12.jar
+	-slf4j-log4j12-1.7.12.jar
+
+Текущее файловое состояние проекта:
+src
+├── agent
+│   ├── Axiom.java
+│   ├── CognitiveAgent.java
+│   ├── Commiter.java
+│   ├── Config.java
+│   ├── InformFactFalse.java
+│   ├── InformFactTrue.java
+│   ├── KbRequest.java
+│   ├── QueryIf.java
+│   ├── REASONER.java
+│   ├── Test.java
+│   └── VarHolder.java
+└── myagent
+    ├── MyCognitiveAgent.java
+    ├── PlatformStart.java
+    ├── SenderAgent.java
+    └── TestAxiom.java
+	
+
+Советы:
+	-Не забывать давать права на запись файлам онтологий на сервере
+

@@ -1,0 +1,114 @@
+Концептуальный алгоритм inContradiction(...) - version 3.1 (in English)
+-------------------------------------------
+
+//Подразумевается, что предиката всегда на 2-ом месте
+//За пределами этого алгоритма: Если (каждый элемент триплета существует в онтологии, то выполняем шаг (2) (ontContains()) //это будет вызов отдельной функций
+//Информация об типе ошибки (из-за чего она была) должна быть более подробной(!), в этом и сила этого алгоритма.
+//TODO:
+//Добавить, что приходит класс (аксиома) в эту функцию (важно для реализации)!
+//Требуется еще обсуждение алгоритма (см. комментарии в алгоритме)
+
+Notes:
+
+[]Cardinality constraints
+--------------------------
+> несколько аксиом, уточняющих одну (первую) аксиому
+Продумать архитектуру класса Axiom
+
+[/]type-subType
+---------------
+(subClassOf)
+
+[/]AsymmetricObjectProperty + ...
+---------------------------------
+На все эти нужно проверять?
+ObjectPropertyAxiom :=
+    SubObjectPropertyOf | EquivalentObjectProperties |
+    DisjointObjectProperties | InverseObjectProperties |
+    ObjectPropertyDomain | ObjectPropertyRange |
+    FunctionalObjectProperty | InverseFunctionalObjectProperty |
+    ReflexiveObjectProperty | IrreflexiveObjectProperty |
+    SymmetricObjectProperty | AsymmetricObjectProperty |
+    TransitiveObjectProperty
+
+SymmetricObjectProperty( a:friend )    If x is a friend of y, then y is a friend of x.
+ObjectPropertyAssertion( a:friend a:Peter a:Brian )    Brian is a friend of Peter.
+
+AsymmetricObjectProperty( a:parentOf )    If x is a parent of y, then y is not a parent of x.
+ObjectPropertyAssertion( a:parentOf a:Peter a:Stewie )    Peter is a parent of Stewie.
+
+[/]Datatype
+-----------
+The datatype xsd:integer denotes the set of all integers. It can be used in axioms such as the following one:
+DataPropertyRange( a:hasAge xsd:integer )    The range of the a:hasAge data property is xsd:integer.
+
+
+
+
+
+---
+
+1) Determine the kind of predicate from the triplet
+	1.1) Is predicate of kind instanceOf // assertionAxiom //проверяется как обычный String
+	1.2) Is predicate of kind subClassOf //проверяется как обычный String
+	1.3) Is predicate of kind SubObjectPropertyOf | EquivalentObjectProperties |
+    DisjointObjectProperties | InverseObjectProperties |
+    ObjectPropertyDomain | ObjectPropertyRange |
+    FunctionalObjectProperty | InverseFunctionalObjectProperty |
+    ReflexiveObjectProperty | IrreflexiveObjectProperty |
+    SymmetricObjectProperty | AsymmetricObjectProperty |
+    TransitiveObjectProperty // сложный анализ с помощью owl api // или может быть найти метод...
+
+2) Determine the kind of 1st entity (type/instance)
+
+3) Determine the kind of 2st entity (type/instance)
+
+//type-objectProperty-type
+4) If (type-type && (predicate != instanceOf || predicate != hasInstance)):
+	4.1) Form appropriate axiom with received (not standard) predicate
+	4.2) Check formed axiom
+	4.3) If (true):
+		4.3.1) return 0; // success
+	4.4) Else:
+		4.4.1) return 1; // error
+
+//type-hasInstance-instance || instance-instanceOf-type
+5) If ((type-instance || instance-type) && (predicate == instanceOf || predicate == hasInstance)):
+	5.1) Form appropriate axiom with received (standard) predicate
+	5.2) Check formed axiom
+	5.3) If (true):
+		5.3.1) return 0; // success
+	5.4) Else:
+		5.4.1) return 1; // error
+
+//type-objectProperty-instance || instance-objectProperty-type
+6) If ((type-instance || instance-type) && (predicate != instanceOf || predicate != hasInstance)):
+	// этот блок нуждается в дополнительном обсуждении (возвращать ошибку или действовать аналогично шагу (4))
+	// Можно ли этот блок объединить с шагом (4)?
+	...
+	6.1) return 1; // error
+
+//instance-objectProperty-instance
+7) If (instance-instance && (predicate != instanceOf || predicate != hasInstance)):
+	7.1) Form appropriate axiom with received (not standard) predicate
+	7.2) Check formed axiom
+	7.3) If (true):
+		7.3.1) return 0; // success
+	7.4) Else:
+		7.4.1) return 1; // error
+
+//Начало блока "необычных" случаев:
+//type-(instanceOf || hasInstance)-type  ||  instance-(instanceOf || hasInstance)-instance
+8) If ((type-type || instance-instance) && (predicate == instanceOf || predicate == hasInstance)):
+	8.1) If (predicate == instanceOf):
+		//We mean that on the first place is "instance", on the third - "type"
+		8.1.1) [similarly with (5)]
+		...
+	8.2) If (predicate == hasInstance):
+		//We mean that on the first place is "type", on the third - "instance"
+		8.2.1) [similarly with (5)]
+		...
+		-----
+		End.
+
+
