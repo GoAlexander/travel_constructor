@@ -36,10 +36,6 @@ public class KbRequest {
     private OWLOntologyManager manager;
     private OWLOntology ontology;
     private String internalOnt = null;
-    protected String ftpNameOfOntFile = null;
-    protected String ftpURL = null;
-    protected String ftpLogin = null;
-    protected String ftpPassword = null;
 
     private VarHolder varHolder; //to store all variables for static methods
 
@@ -59,13 +55,8 @@ public class KbRequest {
      * get access to ftp server (only with these variables you can change
      * ontology file on the server!)
      */
-    public void setOntology(String internalOnt, String ftpNameOfOntFile, String ftpURL, String ftpLogin,
-                            String ftpPassword) {
+    public void setOntology(String internalOnt) {
         this.internalOnt = internalOnt;
-        this.ftpNameOfOntFile = ftpNameOfOntFile;
-        this.ftpURL = ftpURL;
-        this.ftpLogin = ftpLogin;
-        this.ftpPassword = ftpPassword;
 
         //initialize ontology
         if (internalOnt != null) {
@@ -77,29 +68,8 @@ public class KbRequest {
             }
         }
 
-        //initialize agent logs
-        try {
-            // This block configure the logger with handler and formatter
-            fh = new FileHandler("./logs/" + "AgentLog" + ".log", true); //TODO name the agent!
-            logger.setUseParentHandlers(false); // to disable output to the console
-            logger.addHandler(fh);
-            fh.setFormatter(formatter);
-
-        } catch (SecurityException | IOException e) {
-            e.printStackTrace();
-        }
-        logger.info("\n\nAgent started at " + sdf.format(currentTime) +
-                "\n================================================");
-
-        //initialize ontology logs
-        try {
-            bw = new BufferedWriter(new FileWriter("./logs/" + ftpNameOfOntFile + ".log", true));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         //now create VarHolder
-        varHolder = new VarHolder(DEBUG, LOGS, manager, ontology, internalOnt, ftpNameOfOntFile, ftpURL, ftpLogin, ftpPassword);
+        varHolder = new VarHolder(DEBUG, LOGS, manager, ontology, internalOnt);
     }
 
 
@@ -116,7 +86,7 @@ public class KbRequest {
         if (internalOnt == null) {
             throw new IllegalArgumentException("File: " + internalOnt + " not found");
         }
-        File file = new File("C:\\Users\\mtete\\IdeaProjects\\travel_constructor\\codified_ontologies\\clean_ontologies", "RequirementsOfOrderManagerToDelivery-ootos.owl");
+        File file = new File("/home/alexander/Files/Workspaces/IdeaProjects/tmp", "RequirementsOfOrderManagerToDelivery-reification.owl");
 
         OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
 
@@ -128,7 +98,7 @@ public class KbRequest {
     // Methods to process inputted commands and data.
     // ---------------------------------------------------------------------
 
-    public String processMessage(String message) {
+    public String processMessage(String message, String performative, String type) {
         String output = null;
         boolean success = false;
         Axiom myAxiom;
@@ -142,100 +112,45 @@ public class KbRequest {
         output = "INFORM (factTrue):";
         output += success ? "no_errors" : "error"; // if(success == true) -> "no_errors"
 
-//        if (message.getPerformative() == ACLMessage.INFORM) { // if message is  -> transfer of fact (knowledge)
-//            switch (message.getUserDefinedParameter("type")) {
-//                case "factTrue":
-//                    myAxiom = new Axiom(message.getContent(), internalOnt);
-//                    success = addFact(myAxiom);
-//
-//                    output = "INFORM (factTrue):";
-//                    output += success ? "no_errors" : "error"; // if(success == true) -> "no_errors"
-//
-//
-//                    break;
-//                case "factFalse":  // if message -> agent-sender wants to delete entity (individual)
-//                    try {
-//                        myAxiom = new Axiom(message.getContent(), internalOnt);
-//                        success = InformFactFalse.deleteInstance(myAxiom, varHolder);
-//
-//                        output = "INFORM (factFalse):";
-//                        output += success ? "no_errors" : "error";
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    break;
-//                case "service-merge":
-//                    try {
-//                        Test.mergeOntologies(message.getContent(), varHolder);
-//                        output = "INFORM (service-merge):" + "Merging with <" + message.getContent() + "> completed!";
-//                    } catch (OWLOntologyCreationException | OWLOntologyStorageException | IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    // only for methods which are in testing stage
-//                    break;
-//                case "service-test":
-//                    //ontContainsWithReasoner(IRI.create(internalOnt + "#" + message.getContent())); //it is to test Pellet!
-//                    String[] triple = strTriple(message.getContent()); //TODO rewrite with AXIOM class!
-//
-//                    IRI entity1 = IRI.create(internalOnt + "#" + triple[0]);
-//                    IRI predicate = IRI.create(internalOnt + "#" + triple[1]);
-//                    IRI entity2 = IRI.create(internalOnt + "#" + triple[2]);
-//                    //To test. Begin.
-//                    //try {
-//                    //(4)
-//                    //toTestClassCustomClass(entity1, predicate, entity2);
-//                    //(6)
-//                    //toTestClassCustomInd(entity1, predicate, entity2);
-//                    //(7)
-//                    //toTestIndCustomInd(entity1, predicate, entity2);
-//                    //} catch (IOException e) {
-//                    //e.printStackTrace();
-//                    //}
-//                    //To test. End.
-//                    System.out.println(Test.inContradiction(entity1, predicate, entity2, varHolder)); //TODO tmp
-//
-//                    break;
-//                case "is-valid":
-//                    // check if elements can be "together"
-//                    String[] elements = strTriple(message.getContent()); //TODO rewrite with AXIOM class!
-//
-//                    IRI element1 = IRI.create(internalOnt + "#" + elements[0]);
-//                    IRI element2 = IRI.create(internalOnt + "#" + elements[1]);
-//                    IRI element3 = IRI.create(internalOnt + "#" + elements[2]);
-//
-//                    System.out.println("Called is-valid():");
-//                    System.out.println("    Received message: " + message.getContent());
-//                    System.out.println(Test.isValid(element1, element2, element3, varHolder));
-//
-//                    break;
-//            }
-//
-//        } else if (message.getPerformative() == ACLMessage.REQUEST) { // if message -> agent-sender wants to know something (request)
-//            System.out.println("Not implemented yet...");
-//            return "1"; //error
-//
-//        } else if (message.getPerformative() == ACLMessage.QUERY_IF) { // if message -> agent-sender wants to know this message is true or false
-//            myAxiom = new Axiom(IRI.create(internalOnt + "#" + message.getContent()));
-//            myAxiom.setOntology(internalOnt);
-//            output = "QUERY_IF:" + Boolean.toString(processQueryIF(myAxiom));
-//        } else
-//            return "1"; //error
+        if (performative == "INFORM") { // if message is  -> transfer of fact (knowledge)
+            switch (type) {
+                case "factTrue":
+                    myAxiom = new Axiom(message, internalOnt);
+                    success = addFact(myAxiom);
 
-//        output = sdf.format(currentTime) + "-" + message.getSender() + "-" + "\"" + message.getContent() + "\"" + output;
-//        logger.info(output);
+                    output = "INFORM (factTrue):";
+                    output += success ? "no_errors" : "error"; // if(success == true) -> "no_errors"
 
-        //log database
-//        if (message.getPerformative() == ACLMessage.INFORM && success == true) {
-//            try {
-//                bw.write("INFORM(" + message.getUserDefinedParameter("type") + "): " + message.getContent() + "\n");
-//                bw.flush();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+
+                    break;
+                case "factFalse":  // if message -> agent-sender wants to delete entity (individual)
+                    try {
+                        myAxiom = new Axiom(message, internalOnt);
+                        success = InformFactFalse.deleteInstance(myAxiom, varHolder);
+
+                        output = "INFORM (factFalse):";
+                        output += success ? "no_errors" : "error";
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case "service-test":
+                    //..
+                    break;
+            }
+
+        } else if (performative == "REQUEST") { // if message -> agent-sender wants to know something (request)
+            System.out.println("Not implemented yet...");
+            return "1"; //error
+
+        } else if (performative == "QUERY_IF") { // if message -> agent-sender wants to know this message is true or false
+            myAxiom = new Axiom(IRI.create(internalOnt + "#" + message));
+            myAxiom.setOntology(internalOnt);
+            output = "QUERY_IF:" + Boolean.toString(processQueryIF(myAxiom));
+        } else
+            return "1"; //error
 
         return output; //output for logs
     }
