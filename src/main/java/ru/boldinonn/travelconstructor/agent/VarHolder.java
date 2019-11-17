@@ -20,23 +20,13 @@ class VarHolder {
     OWLOntology ontology;
     String internalOnt;
 
-    String ftpNameOfOntFile;
-    String ftpURL;
-    String ftpLogin;
-    String ftpPassword;
-
     public VarHolder(boolean DEBUG, boolean LOGS, OWLOntologyManager manager, OWLOntology ontology,
-                     String internalOnt, String ftpNameOfOntFile, String ftpURL, String ftpLogin, String ftpPassword) {
+                     String internalOnt) {
         this.DEBUG = DEBUG;
         this.LOGS = LOGS;
         this.manager = manager;
         this.ontology = ontology;
         this.internalOnt = internalOnt;
-
-        this.ftpNameOfOntFile = ftpNameOfOntFile;
-        this.ftpURL = ftpURL;
-        this.ftpLogin = ftpLogin;
-        this.ftpPassword = ftpPassword;
     }
 
     public boolean getDebug() {
@@ -57,21 +47,5 @@ class VarHolder {
 
     public String getInternalOnt() {
         return internalOnt;
-    }
-
-    public String getFtpNameOfOntFile() {
-        return ftpNameOfOntFile;
-    }
-
-    public String getFtpURL() {
-        return ftpURL;
-    }
-
-    public String getFtpLogin() {
-        return ftpLogin;
-    }
-
-    public String getFtpPassword() {
-        return ftpPassword;
     }
 }

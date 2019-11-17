@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
+import java.io.File;
 import java.util.HashSet;
 
 public class Axiom {
@@ -101,7 +102,10 @@ public class Axiom {
         if (internalOnt == null) {
             throw new IllegalArgumentException("File: " + internalOnt + " not found");
         }
-        OWLOntology ontology = manager.loadOntology(IRI.create(internalOnt));
+        //OWLOntology ontology = manager.loadOntology(IRI.create(internalOnt));
+        File file = new File("/home/alexander/Files/Workspaces/IdeaProjects/tmp", "RequirementsOfOrderManagerToDelivery-reification.owl");
+
+        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
 
         return ontology;
     }
