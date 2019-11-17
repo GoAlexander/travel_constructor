@@ -11,6 +11,7 @@
 package ru.boldinonn.travelconstructor.agent;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -115,7 +116,10 @@ public class KbRequest {
         if (internalOnt == null) {
             throw new IllegalArgumentException("File: " + internalOnt + " not found");
         }
-        OWLOntology ontology = manager.loadOntology(IRI.create(internalOnt));
+        File file = new File("C:\\Users\\mtete\\IdeaProjects\\travel_constructor\\codified_ontologies\\clean_ontologies", "RequirementsOfOrderManagerToDelivery-ootos.owl");
+
+        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
+
 
         return ontology;
     }
@@ -124,7 +128,7 @@ public class KbRequest {
     // Methods to process inputted commands and data.
     // ---------------------------------------------------------------------
 
-    public String processMessage(ACLMessage message) {
+    public String processMessage(String message) {
         String output = null;
         boolean success = false;
         Axiom myAxiom;
@@ -132,100 +136,106 @@ public class KbRequest {
         if (message == null)
             return "1"; //error
 
-        if (message.getPerformative() == ACLMessage.INFORM) { // if message is  -> transfer of fact (knowledge)
-            switch (message.getUserDefinedParameter("type")) {
-                case "factTrue":
-                    myAxiom = new Axiom(message.getContent(), internalOnt);
-                    success = addFact(myAxiom);
+        myAxiom = new Axiom(message, internalOnt);
+        success = addFact(myAxiom);
 
-                    output = "INFORM (factTrue):";
-                    output += success ? "no_errors" : "error"; // if(success == true) -> "no_errors"
+        output = "INFORM (factTrue):";
+        output += success ? "no_errors" : "error"; // if(success == true) -> "no_errors"
 
+//        if (message.getPerformative() == ACLMessage.INFORM) { // if message is  -> transfer of fact (knowledge)
+//            switch (message.getUserDefinedParameter("type")) {
+//                case "factTrue":
+//                    myAxiom = new Axiom(message.getContent(), internalOnt);
+//                    success = addFact(myAxiom);
+//
+//                    output = "INFORM (factTrue):";
+//                    output += success ? "no_errors" : "error"; // if(success == true) -> "no_errors"
+//
+//
+//                    break;
+//                case "factFalse":  // if message -> agent-sender wants to delete entity (individual)
+//                    try {
+//                        myAxiom = new Axiom(message.getContent(), internalOnt);
+//                        success = InformFactFalse.deleteInstance(myAxiom, varHolder);
+//
+//                        output = "INFORM (factFalse):";
+//                        output += success ? "no_errors" : "error";
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    break;
+//                case "service-merge":
+//                    try {
+//                        Test.mergeOntologies(message.getContent(), varHolder);
+//                        output = "INFORM (service-merge):" + "Merging with <" + message.getContent() + "> completed!";
+//                    } catch (OWLOntologyCreationException | OWLOntologyStorageException | IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    // only for methods which are in testing stage
+//                    break;
+//                case "service-test":
+//                    //ontContainsWithReasoner(IRI.create(internalOnt + "#" + message.getContent())); //it is to test Pellet!
+//                    String[] triple = strTriple(message.getContent()); //TODO rewrite with AXIOM class!
+//
+//                    IRI entity1 = IRI.create(internalOnt + "#" + triple[0]);
+//                    IRI predicate = IRI.create(internalOnt + "#" + triple[1]);
+//                    IRI entity2 = IRI.create(internalOnt + "#" + triple[2]);
+//                    //To test. Begin.
+//                    //try {
+//                    //(4)
+//                    //toTestClassCustomClass(entity1, predicate, entity2);
+//                    //(6)
+//                    //toTestClassCustomInd(entity1, predicate, entity2);
+//                    //(7)
+//                    //toTestIndCustomInd(entity1, predicate, entity2);
+//                    //} catch (IOException e) {
+//                    //e.printStackTrace();
+//                    //}
+//                    //To test. End.
+//                    System.out.println(Test.inContradiction(entity1, predicate, entity2, varHolder)); //TODO tmp
+//
+//                    break;
+//                case "is-valid":
+//                    // check if elements can be "together"
+//                    String[] elements = strTriple(message.getContent()); //TODO rewrite with AXIOM class!
+//
+//                    IRI element1 = IRI.create(internalOnt + "#" + elements[0]);
+//                    IRI element2 = IRI.create(internalOnt + "#" + elements[1]);
+//                    IRI element3 = IRI.create(internalOnt + "#" + elements[2]);
+//
+//                    System.out.println("Called is-valid():");
+//                    System.out.println("    Received message: " + message.getContent());
+//                    System.out.println(Test.isValid(element1, element2, element3, varHolder));
+//
+//                    break;
+//            }
+//
+//        } else if (message.getPerformative() == ACLMessage.REQUEST) { // if message -> agent-sender wants to know something (request)
+//            System.out.println("Not implemented yet...");
+//            return "1"; //error
+//
+//        } else if (message.getPerformative() == ACLMessage.QUERY_IF) { // if message -> agent-sender wants to know this message is true or false
+//            myAxiom = new Axiom(IRI.create(internalOnt + "#" + message.getContent()));
+//            myAxiom.setOntology(internalOnt);
+//            output = "QUERY_IF:" + Boolean.toString(processQueryIF(myAxiom));
+//        } else
+//            return "1"; //error
 
-                    break;
-                case "factFalse":  // if message -> agent-sender wants to delete entity (individual)
-                    try {
-                        myAxiom = new Axiom(message.getContent(), internalOnt);
-                        success = InformFactFalse.deleteInstance(myAxiom, varHolder);
-
-                        output = "INFORM (factFalse):";
-                        output += success ? "no_errors" : "error";
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    break;
-                case "service-merge":
-                    try {
-                        Test.mergeOntologies(message.getContent(), varHolder);
-                        output = "INFORM (service-merge):" + "Merging with <" + message.getContent() + "> completed!";
-                    } catch (OWLOntologyCreationException | OWLOntologyStorageException | IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    // only for methods which are in testing stage
-                    break;
-                case "service-test":
-                    //ontContainsWithReasoner(IRI.create(internalOnt + "#" + message.getContent())); //it is to test Pellet!
-                    String[] triple = strTriple(message.getContent()); //TODO rewrite with AXIOM class!
-
-                    IRI entity1 = IRI.create(internalOnt + "#" + triple[0]);
-                    IRI predicate = IRI.create(internalOnt + "#" + triple[1]);
-                    IRI entity2 = IRI.create(internalOnt + "#" + triple[2]);
-                    //To test. Begin.
-                    //try {
-                    //(4)
-                    //toTestClassCustomClass(entity1, predicate, entity2);
-                    //(6)
-                    //toTestClassCustomInd(entity1, predicate, entity2);
-                    //(7)
-                    //toTestIndCustomInd(entity1, predicate, entity2);
-                    //} catch (IOException e) {
-                    //e.printStackTrace();
-                    //}
-                    //To test. End.
-                    System.out.println(Test.inContradiction(entity1, predicate, entity2, varHolder)); //TODO tmp
-
-                    break;
-                case "is-valid":
-                    // check if elements can be "together"
-                    String[] elements = strTriple(message.getContent()); //TODO rewrite with AXIOM class!
-
-                    IRI element1 = IRI.create(internalOnt + "#" + elements[0]);
-                    IRI element2 = IRI.create(internalOnt + "#" + elements[1]);
-                    IRI element3 = IRI.create(internalOnt + "#" + elements[2]);
-
-                    System.out.println("Called is-valid():");
-                    System.out.println("    Received message: " + message.getContent());
-                    System.out.println(Test.isValid(element1, element2, element3, varHolder));
-
-                    break;
-            }
-
-        } else if (message.getPerformative() == ACLMessage.REQUEST) { // if message -> agent-sender wants to know something (request)
-            System.out.println("Not implemented yet...");
-            return "1"; //error
-
-        } else if (message.getPerformative() == ACLMessage.QUERY_IF) { // if message -> agent-sender wants to know this message is true or false
-            myAxiom = new Axiom(IRI.create(internalOnt + "#" + message.getContent()));
-            myAxiom.setOntology(internalOnt);
-            output = "QUERY_IF:" + Boolean.toString(processQueryIF(myAxiom));
-        } else
-            return "1"; //error
-
-        output = sdf.format(currentTime) + "-" + message.getSender() + "-" + "\"" + message.getContent() + "\"" + output;
-        logger.info(output);
+//        output = sdf.format(currentTime) + "-" + message.getSender() + "-" + "\"" + message.getContent() + "\"" + output;
+//        logger.info(output);
 
         //log database
-        if (message.getPerformative() == ACLMessage.INFORM && success == true) {
-            try {
-                bw.write("INFORM(" + message.getUserDefinedParameter("type") + "): " + message.getContent() + "\n");
-                bw.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (message.getPerformative() == ACLMessage.INFORM && success == true) {
+//            try {
+//                bw.write("INFORM(" + message.getUserDefinedParameter("type") + "): " + message.getContent() + "\n");
+//                bw.flush();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         return output; //output for logs
     }

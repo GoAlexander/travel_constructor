@@ -22,7 +22,7 @@ package ru.boldinonn.travelconstructor.agent;
  * +source code of DummyAgent
  *
  */
-public abstract class CognitiveAgent extends Agent {
+public abstract class CognitiveAgent {
     private final boolean DEBUG = true;
     // protected String file_path = null;
 
@@ -33,41 +33,41 @@ public abstract class CognitiveAgent extends Agent {
     protected String ftpPassword; // EDIT_IT!
     protected String serviceName; // EDIT_IT!
 
-    protected void setup() {
-        // Read the name of the service to register as an argument
-        Object[] args = getArguments();
-        if (args != null && args.length > 0) {
-            serviceName = args[0].toString();
-        }
-
-        // Register the service
-        System.out.println("Agent " + getLocalName() + " registering service \"" + serviceName + " \" ");
-        try {
-            DFAgentDescription dfd = new DFAgentDescription();
-            dfd.setName(getAID());
-            ServiceDescription sd = new ServiceDescription();
-            sd.setName(serviceName);
-
-            sd.setType("My Test"); // edit !
-            // sd.addOntologies("http://hp-note/Pizzeria_DEMO_myVersion.owl");
-            // only for sharing ontologies
-            sd.addOntologies(internalOnt);
-            if (DEBUG)
-                System.out.println("Test: " + sd.getAllOntologies().next());
-
-            // save ontology destination (ONLY for sharing ontologies)
-            // Ont = sd.getAllOntologies().next().toString();
-
-            dfd.addServices(sd);
-
-            DFService.register(this, dfd);
-        } catch (FIPAException fe) {
-            fe.printStackTrace();
-        }
-
-        makeRequest();
-        sendFact();
-    }
+//    protected void setup() {
+//        // Read the name of the service to register as an argument
+//        Object[] args = getArguments();
+//        if (args != null && args.length > 0) {
+//            serviceName = args[0].toString();
+//        }
+//
+//        // Register the service
+//        System.out.println("Agent " + getLocalName() + " registering service \"" + serviceName + " \" ");
+//        try {
+//            DFAgentDescription dfd = new DFAgentDescription();
+//            dfd.setName(getAID());
+//            ServiceDescription sd = new ServiceDescription();
+//            sd.setName(serviceName);
+//
+//            sd.setType("My Test"); // edit !
+//            // sd.addOntologies("http://hp-note/Pizzeria_DEMO_myVersion.owl");
+//            // only for sharing ontologies
+//            sd.addOntologies(internalOnt);
+//            if (DEBUG)
+//                System.out.println("Test: " + sd.getAllOntologies().next());
+//
+//            // save ontology destination (ONLY for sharing ontologies)
+//            // Ont = sd.getAllOntologies().next().toString();
+//
+//            dfd.addServices(sd);
+//
+//            DFService.register(this, dfd);
+//        } catch (FIPAException fe) {
+//            fe.printStackTrace();
+//        }
+//
+//        makeRequest();
+//        sendFact();
+//    }
 
     protected void makeRequest() { // EDIT_IT!
     }
@@ -79,15 +79,15 @@ public abstract class CognitiveAgent extends Agent {
 
     }
 
-    protected void takeDown() {
-        // Deregister from the yellow pages
-        try {
-            DFService.deregister(this);
-        } catch (FIPAException fe) {
-            fe.printStackTrace();
-        }
-        // Printout a dismissal message
-        System.out.println("Register agent " + getAID().getName() + " is terminating.");
-    }
+//    protected void takeDown() {
+//        // Deregister from the yellow pages
+//        try {
+//            DFService.deregister(this);
+//        } catch (FIPAException fe) {
+//            fe.printStackTrace();
+//        }
+//        // Printout a dismissal message
+//        System.out.println("Register agent " + getAID().getName() + " is terminating.");
+//    }
 
 }
