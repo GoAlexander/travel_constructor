@@ -70,8 +70,6 @@ public class KbRequest {
             if (internalOnt != null) { // throw exception???
                 model = initializeOntModel();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,8 +85,6 @@ public class KbRequest {
             if (internalOnt != null) { // throw exception???
                 model = initializeOntModel();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,7 +95,7 @@ public class KbRequest {
 
     //TODO catch NullPointerException!!! (If nothing found!)
     public List<String> jgetInstances(String object) {
-        List<String> results = new ArrayList<String>();
+        List<String> results = new ArrayList<>();
 
         OntClass ontClass = model.getOntClass( internalOnt + "#" + object );
         Resource individual = null;
@@ -136,7 +132,7 @@ public class KbRequest {
 
 
         if (internalOnt == null) {
-            throw new IllegalArgumentException("File: " + internalOnt + " not found");
+            throw new IllegalArgumentException("File not found");
         }
 
         /*
@@ -173,8 +169,9 @@ public class KbRequest {
 
     //This method creates query.
     private List<String> setQuery(String prefix, String option, String requestName) {
-        if (LOGS)
+        if (LOGS) {
             BasicConfigurator.configure(); //for logs!
+        }
 
         //String NS = "http://www.semanticweb.org/xenia/ontologies/2015/10/untitled-ontology-9#";
         //String NS = "http://hp-note/Pizzeria_DEMO_myVersion.owl#";
@@ -192,8 +189,9 @@ public class KbRequest {
     }
 
     private List<String> setQueryToGetInstance(String requestName) {
-        if (LOGS)
+        if (LOGS) {
             BasicConfigurator.configure(); //for logs!
+        }
 
         //String NS = "http://www.semanticweb.org/xenia/ontologies/2015/10/untitled-ontology-9#";
         //String NS = "http://hp-note/Pizzeria_DEMO_myVersion.owl#";
@@ -223,10 +221,7 @@ public class KbRequest {
         Resource r = model.createResource("http://localhost/boldino.owl" + "#" + object);
 
         // these lines implement: does model contain r as a subject?
-        if (model.contains( r, null, (RDFNode) null )) {
-            return true;
-        } else
-            return false;
+        return model.contains(r, null, (RDFNode) null);
     }
 
     //---------------------------------------------------------------------
@@ -296,8 +291,8 @@ public class KbRequest {
 
         //else:
         String[] triples = strTriples(strFacts);
-        for (int i = 0; i< triples.length; i++) {
-            addFact(triples[i]);
+        for (String triple : triples) {
+            addFact(triple);
         }
 
         return 0; //TODO rewrite ending of this method!!!
@@ -345,7 +340,7 @@ public class KbRequest {
 
     private int addInstance(String subject, String object) throws IOException {
         //if <subject> exists in ontology - exit
-        if (ontContains(subject) == true) {
+        if (ontContains(subject)) {
             return 1; //"Error! This object already exists."
         }
 
@@ -354,8 +349,6 @@ public class KbRequest {
             if (internalOnt != null) { // throw exception???
                 model = initializeOntModel();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -363,16 +356,17 @@ public class KbRequest {
         return setQueryToAddNew(subject, object);
     }
 
-    private int writeOntToServer(String queryStr) throws IOException{
+    private int writeOntToServer(String queryStr) throws IOException {
 
         //https://github.com/apache/jena/blob/master/jena-arq/src-examples/arq/examples/update/UpdateExecuteOperations.java
         UpdateRequest request= UpdateFactory.create();
         request.add(queryStr);
         // And perform the operations.
         UpdateAction.execute(request, model);
-        if (DEBUG)
+        if (DEBUG) {
             //SSE.write(model) ;
             model.write(System.out);
+        }
 
 
         /*
@@ -391,8 +385,9 @@ public class KbRequest {
 
 
     private int setQueryToAddNew(String subject, String object) throws IOException {
-        if (LOGS)
+        if (LOGS) {
             BasicConfigurator.configure(); //for logs!
+        }
 
         String queryStr = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
                 + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
@@ -413,8 +408,9 @@ public class KbRequest {
 
 
     private int makeLink(String subject, String predicate, String object) throws IOException {
-        if (LOGS)
+        if (LOGS) {
             BasicConfigurator.configure(); //for logs!
+        }
 
         String queryStr = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
                 + "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
