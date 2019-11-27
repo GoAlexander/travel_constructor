@@ -29,7 +29,7 @@ public class MyCognitiveAgent extends CognitiveAgent {
         //d.setup();
         KbRequest myKbRequest = new KbRequest();
         //myKbRequest.setOntology(internalOnt);
-        myKbRequest.setOntology("/home/alexander/Files/Workspaces/IdeaProjects/tmp/boldino.owl");
+        myKbRequest.setOntology("http://localhost:8080/boldino.owl");
         //System.out.println(myKbRequest.processMessage("Termobox001 instanceOf FoodTermobox", "INFORM", "factTrue"));
         //System.out.println(myKbRequest.processMessage("Termobox001 instanceOf FoodTermobox", "QUERY_IF", "factTrue"));
         //System.out.println(myKbRequest.processMessage("MedicalTermobox instanceOf Termobox", "QUERY_IF", "factTrue"));
