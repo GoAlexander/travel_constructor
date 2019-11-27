@@ -115,7 +115,6 @@ public class KbRequest {
      * Output: OntModel (initialized ontology model)
      */
     private OntModel initializeOntModel() throws MalformedURLException, IOException {
-        OntModel model;
 
         OntModelSpec ontModelSpec = new OntModelSpec(OntModelSpec.OWL_DL_MEM); //old: OWL_MEM_MICRO_RULE_INF //? OWL_MEM_RULE_INF
         model = ModelFactory.createOntologyModel(ontModelSpec);
@@ -217,8 +216,14 @@ public class KbRequest {
         //Resource r = model.createResource(internalOnt + "#" + object);
         //TODO: temporary hardcode! Fix!
 
-        System.out.println("http://localhost/boldino.owl" + "#" + object);
-        Resource r = model.createResource("http://localhost/boldino.owl" + "#" + object);
+        try {
+            initializeOntModel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("http://localhost:8080/boldino.owl" + "#" + object);
+        Resource r = model.createResource("http://localhost:8080/boldino.owl" + "#" + object);
 
         // these lines implement: does model contain r as a subject?
         return model.contains(r, null, (RDFNode) null);
