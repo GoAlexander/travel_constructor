@@ -46,6 +46,7 @@ public class KbRequest {
     private final boolean LOGS = false;
     private OntModel model;
     private String internalOnt = null;
+    public String ontPath = null;
 
     /*
      * This method receives destination of ontology (and name space (They SHOULD be similar!)).
@@ -382,7 +383,9 @@ public class KbRequest {
          * model.write(pW);
          */
         //TODO: HARDCODE! FIX!
-        PrintWriter pW = new PrintWriter("/home/alexander/Files/Workspaces/IdeaProjects/tmp/boldino.owl", "UTF-8");
+        //PrintWriter pW = new PrintWriter("/home/alexander/Files/Workspaces/IdeaProjects/tmp/boldino.owl", "UTF-8");
+        PrintWriter pW = new PrintWriter(ontPath, "UTF-8");
+
         model.write(pW);
 
         return 0; //TODO maybe make some checking before say that all is good?

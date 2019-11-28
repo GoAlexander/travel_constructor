@@ -23,10 +23,11 @@ package ru.boldinonn.travelconstructor.agent;
  *
  */
 public abstract class CognitiveAgent {
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
     // protected String file_path = null;
 
     protected String internalOnt; // EDIT_IT!
+    protected String ontPath;
     protected String serviceName; // EDIT_IT!
 
 }
