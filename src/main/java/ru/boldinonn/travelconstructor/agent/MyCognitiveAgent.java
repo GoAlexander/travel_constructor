@@ -30,11 +30,23 @@ public class MyCognitiveAgent {
         myKbRequest.ontPath = "src/main/resources/public/boldino.owl"; //FIXME!
         myKbRequest.setOntology("http://localhost:8080/boldino.owl");
         //System.out.println(myKbRequest.processMessage("Termobox001 instanceOf FoodTermobox", "INFORM", "factTrue"));
-        System.out.println("PRINT:" + myKbRequest.processMessage("Boldino-Service", "QUERY_IF", "factTrue"));
         //System.out.println(myKbRequest.processMessage("Service001-excursion-t8-ex002 instanceOf Boldino-Service", "QUERY_IF", "factTrue"));
         //System.out.println(myKbRequest.processMessage("Service001-excursion-t8-ex002 instanceOf Boldino-Service", "QUERY_IF", "factTrue"));
 
+        // Test functions:
+        // 1) Check if object exists in ontology
+        System.out.println("PRINT1:" + myKbRequest.processMessage("Boldino-Service", "QUERY_IF", "factTrue"));
+        System.out.println("PRINT2:" + myKbRequest.processMessage("Service001-excursion-t8-ex002", "QUERY_IF", "factTrue"));
 
+        // 2) Add new service
+        System.out.println("PRINT3:" + myKbRequest.addService("Boldino-Service", "duel"));
+
+        // 3) List services of
+        System.out.println("PRINT4:" + myKbRequest.listServicesOf("Boldino-Service"));
+
+
+
+        System.out.println("========================================");
         //Get instances
         System.out.println("PRINT:" + "Request`s value: " + myKbRequest.getInstances("Boldino-Service"));
         //Add facts
