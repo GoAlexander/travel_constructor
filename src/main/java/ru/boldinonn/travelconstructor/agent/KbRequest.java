@@ -7,8 +7,10 @@
 
 package ru.boldinonn.travelconstructor.agent;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
 import org.apache.jena.ontology.Individual;
@@ -32,6 +34,7 @@ import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateRequest;
 import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.log4j.BasicConfigurator;
+import org.apache.jena.vocabulary.RDFS;
 
 
 import java.util.ArrayList;
@@ -407,6 +410,64 @@ public class KbRequest {
                 +" . }";
 
         return writeOntToServer(queryStr);
+    }
+
+
+    //---------------------------------------------------------------------
+    // New Methods. TODO add to processMessage + refactor
+    //---------------------------------------------------------------------
+
+    public String addService(String superClass, String subClass) {
+        // establish a connection
+        try {
+            if (internalOnt != null) { // throw exception???
+                model = initializeOntModel();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ////classB.addProperty( RDFS.subClassOf, classA );
+        Resource classA = model.createResource( internalOnt + "#" + superClass );
+        OntClass classB = model.createClass(internalOnt + "#" + subClass);
+        //Resource classB = model.createResource( internalOnt + "#" + subClass );
+        model.add( classB, RDFS.subClassOf, classA );
+
+        PrintWriter pW = null;
+        try {
+            pW = new PrintWriter(ontPath, "UTF-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        model.write(pW);
+
+        return ("Added " + subClass);
+    }
+
+    public int listServicesOf(String superClass) {
+        // establish a connection
+        try {
+            if (internalOnt != null) { // throw exception???
+                model = initializeOntModel();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        OntClass myClass = model.createClass(internalOnt + "#" + superClass);
+//        ExtendedIterator classes = myClass.listInstances(); //TODO: this code lists instances may be useful
+//        while (classes.hasNext()) {
+//            OntResource curClass = (OntResource) classes.next();
+//            System.out.println(curClass.toString());
+//        }
+        model.setStrictMode(false); //TODO: get to know possible bug in case of disabling strict mode
+        ExtendedIterator classes = myClass.listSubClasses();
+        while (classes.hasNext()) { //TODO: temporary implementation
+            System.out.println(classes.next());
+        }
+            return 0;
     }
 
 
