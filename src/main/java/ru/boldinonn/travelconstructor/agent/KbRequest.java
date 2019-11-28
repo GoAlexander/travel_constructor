@@ -8,7 +8,6 @@
 package ru.boldinonn.travelconstructor.agent;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 
@@ -173,8 +172,6 @@ public class KbRequest {
             BasicConfigurator.configure(); //for logs!
         }
 
-        //String NS = "http://www.semanticweb.org/xenia/ontologies/2015/10/untitled-ontology-9#";
-        //String NS = "http://hp-note/Pizzeria_DEMO_myVersion.owl#";
         String queryStr = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
                 + "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
                 + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
@@ -193,8 +190,6 @@ public class KbRequest {
             BasicConfigurator.configure(); //for logs!
         }
 
-        //String NS = "http://www.semanticweb.org/xenia/ontologies/2015/10/untitled-ontology-9#";
-        //String NS = "http://hp-note/Pizzeria_DEMO_myVersion.owl#";
         String queryStr = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
                 + "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
                 + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
@@ -213,18 +208,13 @@ public class KbRequest {
     //---------------------------------------------------------------------
 
     public boolean ontContains (String object) {
-        //System.out.println(internalOnt + "#" + object);
-        //Resource r = model.createResource(internalOnt + "#" + object);
-        //TODO: temporary hardcode! Fix!
-
         try {
             initializeOntModel();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println("http://localhost:8080/boldino.owl" + "#" + object);
-        Resource r = model.createResource("http://localhost:8080/boldino.owl" + "#" + object);
+        Resource r = model.createResource(internalOnt + "#" + object);
 
         // these lines implement: does model contain r as a subject?
         return model.contains(r, null, (RDFNode) null);
@@ -363,29 +353,16 @@ public class KbRequest {
     }
 
     private int writeOntToServer(String queryStr) throws IOException {
-
         //https://github.com/apache/jena/blob/master/jena-arq/src-examples/arq/examples/update/UpdateExecuteOperations.java
         UpdateRequest request= UpdateFactory.create();
         request.add(queryStr);
         // And perform the operations.
         UpdateAction.execute(request, model);
         if (DEBUG) {
-            //SSE.write(model) ;
             model.write(System.out);
         }
 
-
-        /*
-         * If you can`t start web server you can try this.
-         * Change </opt/lampp/htdocs/Pizzeria_DEMO_myVersion.owl> on your own path.
-         *
-         * PrintWriter pW = new PrintWriter("/opt/lampp/htdocs/Pizzeria_DEMO_myVersion.owl", "UTF-8");
-         * model.write(pW);
-         */
-        //TODO: HARDCODE! FIX!
-        //PrintWriter pW = new PrintWriter("/home/alexander/Files/Workspaces/IdeaProjects/tmp/boldino.owl", "UTF-8");
         PrintWriter pW = new PrintWriter(ontPath, "UTF-8");
-
         model.write(pW);
 
         return 0; //TODO maybe make some checking before say that all is good?
