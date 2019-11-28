@@ -270,22 +270,22 @@ public class KbRequest {
 
     public String processMessage(String message, String performative, String type) {
         if (message == null)
-            return "1";
+            return "Empty message";
 
         //TODO make switch?
         //TODO IMPORTANT! It returns strings!!! not bool and int!  This is very bad!
-        if (performative == "INFORM") { // if message is  -> transfer of fact (knowledge)
+        if ("INFORM".equals(performative)) { // if message is  -> transfer of fact (knowledge)
             return Integer.toString(addFacts(message));
 
-        } else if (performative == "REQUEST") { // if message -> agent-sender wants to know something (request)
+        } else if ("REQUEST".equals(performative)) { // if message -> agent-sender wants to know something (request)
             System.out.println("Not implemented yet...");
             return "0";
 
-        } else if (performative == "QUERY_IF") { // if message -> agent-sender wants to know this message is true or false
+        } else if ("QUERY_IF".equals(performative)) { // if message -> agent-sender wants to know this message is true or false
             return Boolean.toString( ontContains(message) ); // TODO make checking of single word in expression
         }
         else
-            return "1"; //error
+            return "Error processing message"; //error
     }
 
 
