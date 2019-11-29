@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
-import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
@@ -26,7 +25,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.update.UpdateAction;
@@ -47,8 +45,8 @@ public class KbRequest {
     private final boolean DEBUG = false;
     private final boolean LOGS = false;
     private OntModel model;
-    private String internalOnt = null;
-    public String ontPath = null;
+    private String internalOnt;
+    private String ontPath;
 
     /*
      * This method receives destination of ontology (and name space (They SHOULD be similar!)).
@@ -275,7 +273,7 @@ public class KbRequest {
             return "0";
 
         } else if ("QUERY_IF".equals(performative)) { // if message -> agent-sender wants to know this message is true or false
-            return Boolean.toString( ontContains(message) ); // TODO make checking of single word in expression
+            return Boolean.toString(ontContains(message)); // TODO make checking of single word in expression
         }
         else
             return "Error processing message"; //error
@@ -446,7 +444,7 @@ public class KbRequest {
         return ("Added " + subClass);
     }
 
-    public int listServicesOf(String superClass) {
+    public List<String>  listServicesOf(String superClass) {
         // establish a connection
         try {
             if (internalOnt != null) { // throw exception???
@@ -457,21 +455,29 @@ public class KbRequest {
         }
 
         OntClass myClass = model.createClass(internalOnt + "#" + superClass);
-//        ExtendedIterator classes = myClass.listInstances(); //TODO: this code lists instances may be useful
-//        while (classes.hasNext()) {
-//            OntResource curClass = (OntResource) classes.next();
+//        ExtendedIterator classesIterator = myClass.listInstances(); //TODO: this code lists instances may be useful
+//        while (classesIterator.hasNext()) {
+//            OntResource curClass = (OntResource) classesIterator.next();
 //            System.out.println(curClass.toString());
 //        }
         model.setStrictMode(false); //TODO: get to know possible bug in case of disabling strict mode
-        ExtendedIterator classes = myClass.listSubClasses();
-        while (classes.hasNext()) { //TODO: temporary implementation
-            System.out.println(classes.next());
+        List<String> ontClasses = new ArrayList<>();
+        ExtendedIterator<OntClass> classesIterator = myClass.listSubClasses();
+        while (classesIterator.hasNext()) { //TODO: temporary implementation
+            ontClasses.add(classesIterator.next().toString());
         }
-            return 0;
+            return ontClasses;
     }
 
+    public String getOntPath() {
+        return ontPath;
+    }
 
-	/*
+    public void setOntPath(String ontPath) {
+        this.ontPath = ontPath;
+    }
+
+    /*
 	 * Development of this method FROZEN. It was proof of concept.
 	 * (See the documentation to reimplement this method.)
 	private int jmakeLink(String subject, String predicate, String object) throws IOException {
