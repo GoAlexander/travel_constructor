@@ -27,7 +27,7 @@ public class MyCognitiveAgent {
         }
 
         KbRequest myKbRequest = new KbRequest();
-        myKbRequest.ontPath = "src/main/resources/public/boldino.owl"; //FIXME!
+        myKbRequest.setOntPath("src/main/resources/public/boldino.owl"); //FIXME!
         myKbRequest.setOntology("http://localhost:8080/boldino.owl");
         //System.out.println(myKbRequest.processMessage("Termobox001 instanceOf FoodTermobox", "INFORM", "factTrue"));
         //System.out.println(myKbRequest.processMessage("Service001-excursion-t8-ex002 instanceOf Boldino-Service", "QUERY_IF", "factTrue"));

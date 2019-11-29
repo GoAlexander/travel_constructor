@@ -11,6 +11,7 @@ public class AgentConfiguration {
     KbRequest getKbRequest() {
         KbRequest kbRequest = new KbRequest();
         kbRequest.setOntology("http://localhost:8080/boldino.owl");
+        kbRequest.setOntPath("src/main/resources/public/boldino.owl");
         return kbRequest;
     }
 }
