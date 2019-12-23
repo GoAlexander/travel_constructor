@@ -1,11 +1,9 @@
 package ru.boldinonn.travelconstructor.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.boldinonn.travelconstructor.agent.KbRequest;
+import ru.boldinonn.travelconstructor.model.Service;
 
 import java.util.List;
 
@@ -30,9 +28,9 @@ public class ApiController {
         return kbRequest.listServicesOf(superClass);
     }
 
-    @PostMapping("/addService")
-    public String addService(@RequestParam("superClass") String superClass, @RequestParam("subClass") String subClass) {
-        return kbRequest.addService(superClass, subClass);
+    @PostMapping("/service")
+    public String service(@RequestBody Service service) {
+        return kbRequest.addService(service.getSuperClass(), service.getSubClass());
     }
 
 
