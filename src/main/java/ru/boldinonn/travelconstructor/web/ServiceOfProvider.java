@@ -19,6 +19,11 @@ public class ServiceOfProvider {
         this.availableTimes = availableTimes;
     }
 
+    public ServiceOfProvider(String name, List<OffsetDateTime> availableTimes) {
+        this.name = name;
+        this.availableTimes = availableTimes;
+    }
+
     public String getName() {
         return name;
     }
