@@ -22,20 +22,23 @@ public class ApiController {
 
     private static Map<String, List<ServiceOfProvider>> initMap() {
         Map<String, List<ServiceOfProvider>> map = new HashMap<>();
-        ServiceOfProvider museumTicket = new ServiceOfProvider("Экскурсия «Усадьба Пушкиных в Болдине»", 1000,
+        ServiceOfProvider museumTicket = new ServiceOfProvider("Экскурсия «Усадьба Пушкиных в Болдине»",
+                1000,
                 Arrays.asList(
                         OffsetDateTime.parse("2022-05-03T10:00:00+03:00"),
                         OffsetDateTime.parse("2022-05-03T12:00:00+03:00"))
         );
 
-        ServiceOfProvider photo = new ServiceOfProvider("Фотосессия 1 час", 2500,
+        ServiceOfProvider photo = new ServiceOfProvider("Фотосессия 1 час",
+                2500,
                 Arrays.asList(
                         OffsetDateTime.parse("2022-05-03T10:00:00+03:00"),
                         OffsetDateTime.parse("2022-05-03T11:00:00+03:00"),
                         OffsetDateTime.parse("2022-05-03T15:00:00+03:00"))
         );
 
-        ServiceOfProvider gift = new ServiceOfProvider("Экскурсия «В мире литературных героев «Повестей Белкина»", 1200,
+        ServiceOfProvider gift = new ServiceOfProvider("Экскурсия «В мире литературных героев «Повестей Белкина»",
+                1200,
                 Arrays.asList(
                         OffsetDateTime.parse("2022-05-03T10:00:00+03:00"),
                         OffsetDateTime.parse("2022-05-03T11:00:00+03:00"),
@@ -62,13 +65,26 @@ public class ApiController {
 
     @GetMapping("/providers")
     public List<String> getProviders() {
+        //TODO add ontology call
         return providers; 
     }
 
     @GetMapping("/servicesOf/{provider}")
     public List<ServiceOfProvider> getServicesOf(@PathVariable(value = "provider") String provider) {
         return servicesMap.get(provider);
+        //TODO add ontology call
         //return kbRequest.listServicesOf(provider);
+    }
+
+    @PostMapping("/addServiceToCart")
+    public CartItem addServiceToCart(@RequestBody CartItem cartItem) {
+        return cartItem;
+    }
+
+    @GetMapping("/getOrder")
+    public String getOrder() {
+        //TODO add ontology call
+        return "Order successfully created!";
     }
 
     @PostMapping("/service")
