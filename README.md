@@ -1,37 +1,26 @@
-Cognitive Agents for Enterprise Knowledge management (CAKE)
-============================================================
+Travel constructor project for university project
+=================================================
+"Использование онтологий для анализа и оптимизации 
+бизнес-процессов с учетом пожеланий клиента и ограничений заказчика"
 
-Project of university "INSA de Rouen".
---------------------------------------
+Env installing
+--------------
+```
+1) Установить Node JS включая доп утилиты (тулзы для компиляции нативного кода не надо - там отдельная галка при установке) 
+2) Зайти в консоль, npm -v проверить, что всё ок
+3) Перейти в папку frontend
+4) npm install - установятся зависимости
+5) npm run serve - запустится фронт, в консоли появится url
+P.S. Лучше сначала запускать бэк, т.к. фронт сам найдёт свободный порт, а джава хочет дефолтный 8080)
+```
 
-The project will developed in Russian and English.  
-About all dependencies, tips and notes see `docs/mydocumentation_ru.txt`  
-All release sources and documents of 2nd and 3d courses are in the folder `/myReleaseVersions/`  
-  
-Currently development of new version with OWL API is in progress (instead of Jena).  
-  
-  
-Branches
---------
-  
-`master` for releases  
-`dev` for development of new version (The latest version is here)  
-`2courseReleaseVersion` is a release version of 2nd course (2015-2016). Development of this version closed  
-`3courseReleaseVersion` is a release version of 3d course (2016-2017). 
+Parts of project:
+-----------------
+- ontAgent
+- API backend
+- web frontend
+- codified ontology `travel_constructor\src\main\resources\public\boldino.owl`
 
 Notes
 -----
-- Special search keys in code:
-	- `FOR_TESTS` - code for tests, temporary code etc  
-
-Private trello (kanban board): https://trello.com/b/9KHpiQN0/ontologyproject-france-russia  
-
-Virtual machine for testing can be found here: https://yadi.sk/d/lEUnA5gJ3Jp8iZ  
-Documentation about how to use and work in Virtual Machine can be found here: `/vm/VMdoc.txt`
-
-
-Authors
--------
-- Tatyana Poletaeva
-- Alexander Dydychkin
-
+- modified OntAgent based on previous original authors projects
